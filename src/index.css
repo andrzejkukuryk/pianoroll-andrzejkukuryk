@@ -4,4 +4,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(240 240 240);
   font-family: 'Mulish', sans-serif;
+  color: rgb(28, 28, 26);
+  box-sizing: border-box;
 }

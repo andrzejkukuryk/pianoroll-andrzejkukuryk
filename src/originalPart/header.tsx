@@ -1,11 +1,10 @@
 import React from "react";
+import styles from "./header.module.css";
 
 export function Header() {
   return (
-    // <div>
-    <h1 className="text-center">
+    <h1 className={`text-center ${styles.header}`}>
       Welcome to PianoRoll frontend coding challenge!
     </h1>
-    // </div>
   );
 }
