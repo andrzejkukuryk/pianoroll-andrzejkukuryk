@@ -1,6 +1,6 @@
 import PianoRoll from "./pianoroll.js";
 
-export const arrayOfDivs = [];
+export let arrayOfDivs = [];
 
 export class PianoRollDisplay {
   constructor(csvURL) {
@@ -44,7 +44,7 @@ export class PianoRollDisplay {
   async generateSVGs() {
     if (!this.data) await this.loadPianoRollData();
     if (!this.data) return;
-
+    arrayOfDivs = [];
     // const pianoRollContainer = document.getElementById("pianoRollContainer");
     // pianoRollContainer.innerHTML = "";
     for (let it = 0; it < 20; it++) {

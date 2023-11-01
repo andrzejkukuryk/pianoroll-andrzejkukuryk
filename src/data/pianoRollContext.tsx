@@ -4,12 +4,17 @@ import React, {
   useState,
   ReactNode,
   FC,
+  useEffect,
 } from "react";
 
+import { arrayOfDivs } from "../originalPart/app";
+
 const initialPianoRollContext = {
-  prevPath: "",
-  listPage: 1,
-  updateStatesForNavContext: () => {},
+  allPianoRolls: arrayOfDivs,
+  pianoRollsThumbnails: [],
+  currentPianoRoll: "",
+  refresh: () => {},
+  choosePianoRoll: () => {},
 } as unknown as ValueProp;
 
 export const PianoRollContext = createContext<ValueProp>(
@@ -19,10 +24,9 @@ export const PianoRollContext = createContext<ValueProp>(
 interface ValueProp {
   allPianoRolls: any[];
   pianoRollsThumbnails: any[];
-  prevPath: string;
-
-  listPage: number;
-  updateStatesForNavContext: (path: string, page: number) => void;
+  currentPianoRoll: any;
+  refresh: () => void;
+  choosePianoRoll: (index: number) => void;
 }
 
 interface PianoRollProviderProps {
@@ -34,24 +38,41 @@ export const usePianoRollContext = () => {
 };
 
 export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
-  const [prevPath, setPrevPath] = useState("");
-  const [listPage, setListPage] = useState(1);
   const [allPianoRolls, setAllPianoRolls] = useState<any[]>([]);
   const [pianoRollsThumbnails, setPianoRollsThumbnails] = useState<any[]>([]);
   const [currentPianoRoll, setCurrentPianoRoll] = useState<any>();
 
-  const updateStatesForNavContext = (path: string, page: number) => {
-    setPrevPath(path);
-    setListPage(page);
+  const refresh = () => {
+    setAllPianoRolls(arrayOfDivs);
+    setPianoRollsThumbnails(arrayOfDivs);
+  };
+
+  const choosePianoRoll = (index: number) => {
+    const temporary = [...allPianoRolls];
+    const newCurrentPianoRoll = temporary.splice(index, 1);
+    setPianoRollsThumbnails(temporary);
+    setCurrentPianoRoll(newCurrentPianoRoll);
+    console.log(temporary);
   };
 
   const value: ValueProp = {
     allPianoRolls,
     pianoRollsThumbnails,
-    prevPath,
-    listPage,
-    updateStatesForNavContext,
+    currentPianoRoll,
+    refresh,
+    choosePianoRoll,
   };
+
+  useEffect(
+    () => console.log("currentPianoRoll: ", currentPianoRoll),
+    [currentPianoRoll]
+  );
+
+  useEffect(() =>
+    console.log("pianoRollsThumbnails: ", pianoRollsThumbnails, [
+      pianoRollsThumbnails,
+    ])
+  );
 
   return (
     <PianoRollContext.Provider value={value}>

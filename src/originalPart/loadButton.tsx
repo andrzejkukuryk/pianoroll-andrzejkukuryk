@@ -6,6 +6,7 @@ interface LoadButtonProps {
 }
 
 export function LoadButton({ ftn }: LoadButtonProps) {
+
   return (
     <div className={styles.buttonContainer}>
       <button onClick={ftn} className={styles.loadButton}>
