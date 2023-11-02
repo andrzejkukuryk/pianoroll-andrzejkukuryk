@@ -4,10 +4,10 @@ import React, {
   useState,
   ReactNode,
   FC,
-  useEffect,
 } from "react";
 
 import { arrayOfDivs } from "../originalPart/app";
+import { PianoRollDiv } from "../challengePart/pianoRollDiv";
 
 const initialPianoRollContext = {
   allPianoRolls: arrayOfDivs,
@@ -38,21 +38,29 @@ export const usePianoRollContext = () => {
 };
 
 export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
-  const [allPianoRolls, setAllPianoRolls] = useState<any[]>([]);
-  const [pianoRollsThumbnails, setPianoRollsThumbnails] = useState<any[]>([]);
-  const [currentPianoRoll, setCurrentPianoRoll] = useState<any>();
+  const [allPianoRolls, setAllPianoRolls] = useState<JSX.Element[]>([]);
+  const [pianoRollsThumbnails, setPianoRollsThumbnails] = useState<
+    JSX.Element[]
+  >([]);
+  const [currentPianoRoll, setCurrentPianoRoll] = useState<JSX.Element>();
 
   const refresh = () => {
-    setAllPianoRolls(arrayOfDivs);
-    setPianoRollsThumbnails(arrayOfDivs);
+    prepareJSXs();
+  };
+
+  const prepareJSXs = () => {
+    const preparedJSXs = arrayOfDivs.map((div, index) => (
+      <PianoRollDiv content={div} key={index} />
+    ));
+    setAllPianoRolls(preparedJSXs);
+    setPianoRollsThumbnails(preparedJSXs);
   };
 
   const choosePianoRoll = (index: number) => {
     const temporary = [...allPianoRolls];
     const newCurrentPianoRoll = temporary.splice(index, 1);
     setPianoRollsThumbnails(temporary);
-    setCurrentPianoRoll(newCurrentPianoRoll);
-    console.log(temporary);
+    setCurrentPianoRoll(newCurrentPianoRoll[0]);
   };
 
   const value: ValueProp = {
@@ -62,17 +70,6 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     refresh,
     choosePianoRoll,
   };
-
-  useEffect(
-    () => console.log("currentPianoRoll: ", currentPianoRoll),
-    [currentPianoRoll]
-  );
-
-  useEffect(() =>
-    console.log("pianoRollsThumbnails: ", pianoRollsThumbnails, [
-      pianoRollsThumbnails,
-    ])
-  );
 
   return (
     <PianoRollContext.Provider value={value}>

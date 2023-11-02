@@ -1,35 +1,35 @@
 import React, { useEffect, useRef } from "react";
 import { Col } from "react-bootstrap";
 import { usePianoRollContext } from "../data/pianoRollContext";
+import styles from "./thumbnail.module.css";
+
+type viewType = "thumbnails" | "mainPianoRoll";
 
 interface ThumbnailProps {
   content: any;
+  view: viewType;
 }
 
-export function Thumbnail({ content }: ThumbnailProps) {
+export function Thumbnail({ content, view }: ThumbnailProps) {
   const { choosePianoRoll } = usePianoRollContext();
   const pianoRoll = useRef(null);
 
-  useEffect(() => {
-    if (pianoRoll.current) {
-      //@ts-ignore
-      pianoRoll.current.appendChild(content);
-    }
-    // return () => {
-    //   //@ts-ignore
-    //   pianoRoll.current.removeChild(content);
-    // };
-  }, []);
+  const thumbnailWidth = view === "thumbnails" ? 4 : 12;
 
-  const changeHeight = () => {
+  const prepareThumbnail = () => {
     const div = pianoRoll.current;
 
     if (div) {
       //@ts-ignore
       const svg = div.querySelector("svg");
-      svg.setAttribute("height", "200");
+      svg.setAttribute("height", "150");
+      svg.setAttribute("width", "100%");
     }
   };
+
+  useEffect(() => {
+    prepareThumbnail();
+  }, [content]);
 
   const findIndex = () => {
     const div = pianoRoll.current;
@@ -43,9 +43,10 @@ export function Thumbnail({ content }: ThumbnailProps) {
   };
 
   return (
-    <Col xs={4}>
-      <button onClick={changeHeight}>change</button>
-      <div ref={pianoRoll} onClick={() => choosePianoRoll(findIndex())} />
+    <Col xs={thumbnailWidth} className={`p-0 m-5 ${styles.thumbnail}`}>
+      <div ref={pianoRoll} onClick={() => choosePianoRoll(findIndex())}>
+        {content}
+      </div>
     </Col>
   );
 }
