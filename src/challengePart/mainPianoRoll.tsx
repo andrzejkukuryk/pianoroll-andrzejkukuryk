@@ -22,7 +22,7 @@ export function MainPianoRoll() {
   }, [currentPianoRoll]);
 
   return (
-    <Col xs={8} className="p-0 mt-5">
+    <Col xs={8} className="p-0">
       <div ref={pianoRoll}>{currentPianoRoll}</div>
     </Col>
   );

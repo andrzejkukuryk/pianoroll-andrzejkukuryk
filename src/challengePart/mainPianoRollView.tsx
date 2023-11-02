@@ -1,5 +1,6 @@
 import React from "react";
 import { usePianoRollContext } from "../data/pianoRollContext";
+import styles from "./mainPianoRollView.module.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { MainPianoRoll } from "./mainPianoRoll";
 import { Thumbnail } from "./thumbnail";
@@ -17,7 +18,9 @@ export function MainPianoRollView() {
         <Row>
           <MainPianoRoll />
           <Col xs={4} className="p-0">
-            <Container className="p-0">{createThumbnails()}</Container>
+            <Container className={`p-0 mt-4 ${styles.scrollable}`}>
+              {createThumbnails()}
+            </Container>
           </Col>
         </Row>
       </Container>

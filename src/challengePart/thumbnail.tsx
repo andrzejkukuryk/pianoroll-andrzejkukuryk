@@ -14,7 +14,7 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
   const { choosePianoRoll } = usePianoRollContext();
   const pianoRoll = useRef(null);
 
-  const thumbnailWidth = view === "thumbnails" ? 4 : 12;
+  const thumbnailWidth = view === "thumbnails" ? 4 : 9;
 
   const prepareThumbnail = () => {
     const div = pianoRoll.current;
@@ -43,7 +43,7 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
   };
 
   return (
-    <Col xs={thumbnailWidth} className={`p-0 m-5 ${styles.thumbnail}`}>
+    <Col xs={thumbnailWidth} className={`p-0 mb-5 ms-5 ${styles.thumbnail}`}>
       <div ref={pianoRoll} onClick={() => choosePianoRoll(findIndex())}>
         {content}
       </div>
