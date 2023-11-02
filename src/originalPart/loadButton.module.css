@@ -1,0 +1,25 @@
+.buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.loadButton {
+    padding: 15px 25px;
+    height: 54px;
+    font-size: 18px;
+    color: #F0F0F0;
+    background-color: #944038;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    border-bottom: 3px solid #381815;
+    position: relative;
+    transition: all 1.1s ease;
+}
+
+
+.loadButton:hover {
+    transform: scale(1.05);
+}
