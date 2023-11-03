@@ -23,6 +23,8 @@ export function Select({
   const [xl, setXl] = useState<number | undefined>(undefined);
   const [xr, setXr] = useState<number | undefined>(0);
   const [selectWidth, setSelectWidth] = useState(0);
+  const [selectionStart, setSelectionStart] = useState(0);
+  const [selectionEnd, setSelectionEnd] = useState(0);
 
   useEffect(() => {
     setXl(x1);
@@ -45,6 +47,32 @@ export function Select({
   const handleButtonClick = () => {
     setShowSelect(false);
   };
+
+  const selectResult = () => {
+    if (width !== 0) {
+      const begin = x1;
+      const end = begin + width;
+      if (begin < end) {
+        setSelectionStart(begin);
+        setSelectionEnd(end);
+      } else {
+        setSelectionStart(end);
+        setSelectionEnd(begin);
+      }
+    }
+  };
+
+  useEffect(() => selectResult(), [showCloseButton === true]);
+  useEffect(
+    () =>
+      console.log(
+        "Selection begins at:",
+        selectionStart,
+        "and ends at:",
+        selectionEnd
+      ),
+    [selectionEnd]
+  );
 
   const divClass = classNames({
     [styles.selectArea]: show,
