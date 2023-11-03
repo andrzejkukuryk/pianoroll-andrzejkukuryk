@@ -71,6 +71,8 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     choosePianoRoll,
   };
 
+console.log(arrayOfDivs);
+
   return (
     <PianoRollContext.Provider value={value}>
       {children}

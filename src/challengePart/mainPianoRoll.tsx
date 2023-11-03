@@ -12,23 +12,37 @@ export function MainPianoRoll() {
   const [x1, setX1] = useState(0);
   const [x2, setX2] = useState(0);
   const [selectWidth, setSelectWidth] = useState(0);
-  const pianoRoll = useRef(null);
+  const pianoRoll = useRef<HTMLDivElement>(null);
 
+  ////// SVG section //////
   const prepareMainRoll = () => {
     const div = pianoRoll.current;
 
     if (div) {
-      //@ts-ignore
-      const svg = div.querySelector("svg");
-      svg.setAttribute("height", "600");
-      svg.setAttribute("width", "100%");
+      const svg = div.querySelector<SVGElement>("svg");
+      if (svg) {
+        svg.setAttribute("height", "600");
+        svg.setAttribute("width", "100%");
+      }
     }
   };
 
   useEffect(() => {
     prepareMainRoll();
+    findNoteRectangles();
     clearSelect();
   }, [currentPianoRoll]);
+
+  const findNoteRectangles = () => {
+    const div = pianoRoll.current;
+    if (div) {
+      const rects = div.querySelectorAll(".note-rectangle");
+      const newNoteRectangles = Array.from(rects);
+      console.log(newNoteRectangles[0].getAttribute("width"));
+    }
+  };
+
+  ////// Select section /////////
 
   const clearSelect = () => {
     setSelectWidth(0);
@@ -48,7 +62,6 @@ export function MainPianoRoll() {
     clearSelect();
     setButtonPushed(true);
     if (pianoRoll.current) {
-      //@ts-ignore
       const rect = pianoRoll.current.getBoundingClientRect();
       const xl = event.clientX - rect.left;
       const xr = rect.right - event.clientX;
@@ -64,7 +77,6 @@ export function MainPianoRoll() {
     event.preventDefault();
     if (buttonPushed) {
       if (pianoRoll.current) {
-        //@ts-ignore
         const rect = pianoRoll.current.getBoundingClientRect();
         const xMove = event.clientX - rect.left;
         const newSelectWidth = xMove - x1;
