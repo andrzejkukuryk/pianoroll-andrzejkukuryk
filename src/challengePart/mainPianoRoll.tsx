@@ -9,6 +9,7 @@ export function MainPianoRoll() {
   const [showSelect, setShowSelect] = useState(false);
   const [buttonPushed, setButtonPushed] = useState(false);
   const [x1, setX1] = useState(0);
+  const [x2, setX2] = useState(0);
   const [selectWidth, setSelectWidth] = useState(0);
   const pianoRoll = useRef(null);
 
@@ -19,12 +20,13 @@ export function MainPianoRoll() {
       //@ts-ignore
       const svg = div.querySelector("svg");
       svg.setAttribute("height", "600");
-      svg.setAttribute("width", "90%");
+      svg.setAttribute("width", "100%");
     }
   };
 
   useEffect(() => {
     prepareMainRoll();
+    clearSelect();
   }, [currentPianoRoll]);
 
   const clearSelect = () => {
@@ -45,8 +47,10 @@ export function MainPianoRoll() {
     if (pianoRoll.current) {
       //@ts-ignore
       const rect = pianoRoll.current.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      setX1(x);
+      const xl = event.clientX - rect.left;
+      const xr = rect.right - event.clientX;
+      setX1(xl);
+      setX2(xr);
     }
     initSelect();
   };
@@ -77,9 +81,10 @@ export function MainPianoRoll() {
         onMouseDown={(e) => handleMouseDown(e)}
         onMouseMove={(e) => handleMouseMove(e)}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
       >
         {currentPianoRoll}
-        <Select show={showSelect} x1={x1} width={selectWidth} />
+        <Select show={showSelect} x1={x1} x2={x2} width={selectWidth} />
       </div>
     </Col>
   );
