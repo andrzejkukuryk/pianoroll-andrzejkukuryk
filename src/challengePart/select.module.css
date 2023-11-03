@@ -1,0 +1,13 @@
+.selectArea {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 600px;
+    width: 100px;
+    background-color: rgba(0, 47, 255, 0.3);
+    border: solid 1px rgba(0, 47, 255, 0.6)
+}
+
+.hide {
+    display: none;
+}
