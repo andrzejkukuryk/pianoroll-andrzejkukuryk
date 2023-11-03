@@ -14,7 +14,7 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
   const { choosePianoRoll } = usePianoRollContext();
   const pianoRoll = useRef(null);
 
-  const thumbnailWidth = view === "thumbnails" ? 3 : 9;
+  const thumbnailWidth = view === "thumbnails" ? 4 : 9;
 
   const prepareThumbnail = () => {
     const div = pianoRoll.current;
