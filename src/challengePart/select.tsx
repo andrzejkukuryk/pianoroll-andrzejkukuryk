@@ -63,16 +63,16 @@ export function Select({
   };
 
   useEffect(() => selectResult(), [showCloseButton === true]);
-  useEffect(
-    () =>
+  useEffect(() => {
+    if (selectionEnd !== 0) {
       console.log(
         "Selection begins at:",
         selectionStart,
         "and ends at:",
         selectionEnd
-      ),
-    [selectionEnd]
-  );
+      );
+    }
+  }, [selectionEnd]);
 
   const divClass = classNames({
     [styles.selectArea]: show,
