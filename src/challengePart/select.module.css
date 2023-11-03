@@ -1,5 +1,6 @@
 .selectArea {
-    display: block;
+    display: flex;
+    justify-content: flex-end;
     position: absolute;
     bottom: 0;
     height: 600px;
@@ -10,4 +11,20 @@
 
 .hide {
     display: none;
+}
+
+.closeButton {
+    display: block;
+    background: none;
+    width: 24px;
+    height: 24px;
+    margin: 8px 14px 0 0;
+    border: none;
+    color: rgba(239, 240, 243, 0.9);
+    line-height: 4px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
 }

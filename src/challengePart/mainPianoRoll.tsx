@@ -7,6 +7,7 @@ import { Select } from "./select";
 export function MainPianoRoll() {
   const { currentPianoRoll } = usePianoRollContext();
   const [showSelect, setShowSelect] = useState(false);
+  const [showCloseSelect, setShowCloseSelect] = useState(false);
   const [buttonPushed, setButtonPushed] = useState(false);
   const [x1, setX1] = useState(0);
   const [x2, setX2] = useState(0);
@@ -33,6 +34,7 @@ export function MainPianoRoll() {
     setSelectWidth(0);
     setX1(0);
     setButtonPushed(false);
+    setShowCloseSelect(false);
   };
 
   const initSelect = () => {
@@ -42,6 +44,7 @@ export function MainPianoRoll() {
   const handleMouseDown = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    event.preventDefault();
     clearSelect();
     setButtonPushed(true);
     if (pianoRoll.current) {
@@ -58,6 +61,7 @@ export function MainPianoRoll() {
   const handleMouseMove = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    event.preventDefault();
     if (buttonPushed) {
       if (pianoRoll.current) {
         //@ts-ignore
@@ -71,6 +75,7 @@ export function MainPianoRoll() {
 
   const handleMouseUp = () => {
     setButtonPushed(false);
+    setShowCloseSelect(true);
   };
 
   return (
@@ -84,7 +89,14 @@ export function MainPianoRoll() {
         onMouseLeave={handleMouseUp}
       >
         {currentPianoRoll}
-        <Select show={showSelect} x1={x1} x2={x2} width={selectWidth} />
+        <Select
+          show={showSelect}
+          setShowSelect={setShowSelect}
+          showCloseButton={showCloseSelect}
+          x1={x1}
+          x2={x2}
+          width={selectWidth}
+        />
       </div>
     </Col>
   );
