@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 interface PianoRollDivProps {
-  content: HTMLElement;
+  content: any;
 }
 
 export function PianoRollDiv({ content }: PianoRollDivProps) {
@@ -17,5 +17,10 @@ export function PianoRollDiv({ content }: PianoRollDivProps) {
     // };
   }, []);
 
-  return <div ref={divRef} />;
+  return (
+    <div
+      ref={divRef}
+      // dangerouslySetInnerHTML={{ __html: content }}
+    ></div>
+  );
 }

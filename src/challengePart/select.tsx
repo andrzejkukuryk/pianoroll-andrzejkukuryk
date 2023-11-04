@@ -10,6 +10,7 @@ interface SelectProps {
   x1: number;
   x2: number;
   width: number;
+  svgWidth: number | undefined;
 }
 
 export function Select({
@@ -19,12 +20,15 @@ export function Select({
   x1,
   x2,
   width,
+  svgWidth,
 }: SelectProps) {
   const [xl, setXl] = useState<number | undefined>(undefined);
   const [xr, setXr] = useState<number | undefined>(0);
   const [selectWidth, setSelectWidth] = useState(0);
   const [selectionStart, setSelectionStart] = useState(0);
   const [selectionEnd, setSelectionEnd] = useState(0);
+  const [selectionPercentStart, setSeletionPercentStart] = useState(0);
+  const [selectionPercentEnd, setSeletionPercentEnd] = useState(0);
 
   useEffect(() => {
     setXl(x1);
@@ -62,7 +66,21 @@ export function Select({
     }
   };
 
-  useEffect(() => selectResult(), [showCloseButton === true]);
+  useEffect(() => {
+    selectResult();
+    countSelectionPercents();
+  }, [showCloseButton === true]);
+
+  const countSelectionPercents = () => {
+    if (svgWidth) {
+      const newPercentStart = selectionStart / svgWidth;
+      const newPercentEnd = selectionEnd / svgWidth;
+
+      setSeletionPercentStart(newPercentStart);
+      setSeletionPercentEnd(newPercentEnd);
+    }
+  };
+
   useEffect(() => {
     if (selectionEnd !== 0) {
       console.log(
@@ -70,6 +88,12 @@ export function Select({
         selectionStart,
         "and ends at:",
         selectionEnd
+      );
+      console.log(
+        "selectionPercentStart: ",
+        selectionPercentStart,
+        "selectionPercentEnd: ",
+        selectionPercentEnd
       );
     }
   }, [selectionEnd]);

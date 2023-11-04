@@ -42,6 +42,14 @@ export function MainPianoRoll() {
     }
   };
 
+  const checkSvgWidth = () => {
+    const div = pianoRoll.current;
+    if (div) {
+      const width = div.offsetWidth;
+      return width;
+    }
+  };
+
   ////// Select section /////////
 
   const clearSelect = () => {
@@ -108,6 +116,7 @@ export function MainPianoRoll() {
           x1={x1}
           x2={x2}
           width={selectWidth}
+          svgWidth={checkSvgWidth()}
         />
       </div>
     </Col>
