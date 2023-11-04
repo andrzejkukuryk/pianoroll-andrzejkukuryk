@@ -99,7 +99,9 @@ export function Select({
         (rect) =>
           (rect.x > selectionPercentStart && rect.x < selectionPercentEnd) ||
           (rect.x + rect.width > selectionPercentStart &&
-            rect.x + rect.width < selectionPercentEnd)
+            rect.x + rect.width < selectionPercentEnd) ||
+          (rect.x < selectionPercentStart &&
+            rect.x + rect.width > selectionPercentEnd)
       ).length;
       setNumberOfSelectedNotes(numberOfNotes);
       return numberOfNotes;
