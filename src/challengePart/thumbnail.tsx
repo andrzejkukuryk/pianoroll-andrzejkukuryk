@@ -12,7 +12,7 @@ interface ThumbnailProps {
 
 export function Thumbnail({ content, view }: ThumbnailProps) {
   const { choosePianoRoll } = usePianoRollContext();
-  const pianoRoll = useRef(null);
+  const pianoRoll = useRef<HTMLDivElement>(null);
 
   const thumbnailWidth = view === "thumbnails" ? 4 : 9;
 
@@ -20,10 +20,11 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
     const div = pianoRoll.current;
 
     if (div) {
-      //@ts-ignore
-      const svg = div.querySelector("svg");
-      svg.setAttribute("height", "150");
-      svg.setAttribute("width", "100%");
+      const svg = div.querySelector<SVGSVGElement>("svg");
+      if (svg) {
+        svg.setAttribute("height", "150");
+        svg.setAttribute("width", "100%");
+      }
     }
   };
 
@@ -35,11 +36,13 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
     const div = pianoRoll.current;
 
     if (div) {
-      //@ts-ignore
       const txt = div.querySelector("div.description");
-      const index = txt.innerHTML.replace(/\D/g, "");
-      return index;
+      if (txt) {
+        const index = txt.innerHTML.replace(/\D/g, "");
+        return Number(index);
+      }
     }
+    return 0;
   };
 
   return (
