@@ -4,13 +4,13 @@ import React, {
   useState,
   ReactNode,
   FC,
+  useEffect,
 } from "react";
 
-import { arrayOfDivs } from "../originalPart/app";
 import { PianoRollDiv } from "../challengePart/pianoRollDiv";
 
 const initialPianoRollContext = {
-  allPianoRolls: arrayOfDivs,
+  allPianoRolls: [],
   pianoRollsThumbnails: [],
   currentPianoRoll: "",
   refresh: () => {},
@@ -27,6 +27,7 @@ interface ValueProp {
   currentPianoRoll: any;
   refresh: () => void;
   choosePianoRoll: (index: number) => void;
+  setArrayOfDivs: React.Dispatch<React.SetStateAction<HTMLDivElement[]>>;
 }
 
 interface PianoRollProviderProps {
@@ -38,6 +39,7 @@ export const usePianoRollContext = () => {
 };
 
 export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
+  const [arrayOfDivs, setArrayOfDivs] = useState<HTMLDivElement[]>([]);
   const [allPianoRolls, setAllPianoRolls] = useState<JSX.Element[]>([]);
   const [pianoRollsThumbnails, setPianoRollsThumbnails] = useState<
     JSX.Element[]
@@ -56,6 +58,8 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     setPianoRollsThumbnails(preparedJSXs);
   };
 
+  useEffect(() => prepareJSXs(), [arrayOfDivs]);
+
   const choosePianoRoll = (index: number) => {
     const temporary = [...allPianoRolls];
     const newCurrentPianoRoll = temporary.splice(index, 1);
@@ -69,9 +73,10 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     currentPianoRoll,
     refresh,
     choosePianoRoll,
+    setArrayOfDivs,
   };
 
-console.log(arrayOfDivs);
+  console.log(arrayOfDivs);
 
   return (
     <PianoRollContext.Provider value={value}>

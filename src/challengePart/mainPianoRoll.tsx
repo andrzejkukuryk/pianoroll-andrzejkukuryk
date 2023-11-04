@@ -29,7 +29,6 @@ export function MainPianoRoll() {
 
   useEffect(() => {
     prepareMainRoll();
-    findNoteRectangles();
     clearSelect();
   }, [currentPianoRoll]);
 
@@ -38,7 +37,15 @@ export function MainPianoRoll() {
     if (div) {
       const rects = div.querySelectorAll(".note-rectangle");
       const newNoteRectangles = Array.from(rects);
-      console.log(newNoteRectangles[0].getAttribute("width"));
+      const rectsDimentions = newNoteRectangles.map((rect) => {
+        const x = Number(rect.getAttribute("x"));
+        const w = Number(rect.getAttribute("width"));
+        return {
+          x: x,
+          width: w,
+        };
+      });
+      return rectsDimentions;
     }
   };
 
@@ -117,6 +124,7 @@ export function MainPianoRoll() {
           x2={x2}
           width={selectWidth}
           svgWidth={checkSvgWidth()}
+          noteRectangles={findNoteRectangles()}
         />
       </div>
     </Col>

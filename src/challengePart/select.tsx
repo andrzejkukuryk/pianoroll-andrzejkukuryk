@@ -11,6 +11,12 @@ interface SelectProps {
   x2: number;
   width: number;
   svgWidth: number | undefined;
+  noteRectangles:
+    | {
+        x: number;
+        width: number;
+      }[]
+    | undefined;
 }
 
 export function Select({
@@ -21,6 +27,7 @@ export function Select({
   x2,
   width,
   svgWidth,
+  noteRectangles,
 }: SelectProps) {
   const [xl, setXl] = useState<number | undefined>(undefined);
   const [xr, setXr] = useState<number | undefined>(0);
@@ -29,6 +36,7 @@ export function Select({
   const [selectionEnd, setSelectionEnd] = useState(0);
   const [selectionPercentStart, setSeletionPercentStart] = useState(0);
   const [selectionPercentEnd, setSeletionPercentEnd] = useState(0);
+  const [numberOfSelectedNotes, setNumberOfSelectedNotes] = useState(0);
 
   useEffect(() => {
     setXl(x1);
@@ -53,50 +61,50 @@ export function Select({
   };
 
   const selectResult = () => {
-    if (width !== 0) {
+    if (width !== 0 && svgWidth) {
       const begin = x1;
+      const beginPerc = begin / svgWidth;
       const end = begin + width;
+      const endPerc = end / svgWidth;
       if (begin < end) {
         setSelectionStart(begin);
         setSelectionEnd(end);
+        setSeletionPercentStart(beginPerc);
+        setSeletionPercentEnd(endPerc);
       } else {
         setSelectionStart(end);
         setSelectionEnd(begin);
+        setSeletionPercentStart(endPerc);
+        setSeletionPercentEnd(beginPerc);
       }
     }
   };
 
   useEffect(() => {
     selectResult();
-    countSelectionPercents();
   }, [showCloseButton === true]);
-
-  const countSelectionPercents = () => {
-    if (svgWidth) {
-      const newPercentStart = selectionStart / svgWidth;
-      const newPercentEnd = selectionEnd / svgWidth;
-
-      setSeletionPercentStart(newPercentStart);
-      setSeletionPercentEnd(newPercentEnd);
-    }
-  };
 
   useEffect(() => {
     if (selectionEnd !== 0) {
+      countSelectedNotes();
       console.log(
-        "Selection begins at:",
-        selectionStart,
-        "and ends at:",
-        selectionEnd
-      );
-      console.log(
-        "selectionPercentStart: ",
-        selectionPercentStart,
-        "selectionPercentEnd: ",
-        selectionPercentEnd
+        `Selection starts at ${selectionPercentStart} ends at ${selectionPercentEnd} and selects ${countSelectedNotes()} notes.`
       );
     }
   }, [selectionEnd]);
+
+  const countSelectedNotes = () => {
+    if (noteRectangles) {
+      const numberOfNotes = noteRectangles.filter(
+        (rect) =>
+          (rect.x > selectionPercentStart && rect.x < selectionPercentEnd) ||
+          (rect.x + rect.width > selectionPercentStart &&
+            rect.x + rect.width < selectionPercentEnd)
+      ).length;
+      setNumberOfSelectedNotes(numberOfNotes);
+      return numberOfNotes;
+    }
+  };
 
   const divClass = classNames({
     [styles.selectArea]: show,
