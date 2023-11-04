@@ -11,13 +11,18 @@ export function OriginalPart() {
 
   const handleClick = async () => {
     reset();
-    const csvToSVG = new PianoRollDisplay();
-    await csvToSVG.generateSVGs();
-    if (await csvToSVG.generateSVGs()) {
+
+    try {
+      const csvToSVG = new PianoRollDisplay();
       const newArrayOfDivs = await csvToSVG.generateSVGs();
-      if (newArrayOfDivs !== undefined) {
+
+      if (newArrayOfDivs) {
         setArrayOfDivs(newArrayOfDivs);
+      } else {
+        console.error("generateSVGs() returned falsy.");
       }
+    } catch (error) {
+      console.error("An error when generating SVG:", error);
     }
   };
 
@@ -26,7 +31,6 @@ export function OriginalPart() {
       <Nav />
       <Header />
       <LoadButton ftn={handleClick} />
-      <div id="pianoRollContainer" />
     </div>
   );
 }

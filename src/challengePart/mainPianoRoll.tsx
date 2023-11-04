@@ -12,12 +12,12 @@ export function MainPianoRoll() {
   const [x1, setX1] = useState(0);
   const [x2, setX2] = useState(0);
   const [selectWidth, setSelectWidth] = useState(0);
+  const [text, setText] = useState("");
   const pianoRoll = useRef<HTMLDivElement>(null);
 
   ////// SVG section //////
   const prepareMainRoll = () => {
     const div = pianoRoll.current;
-
     if (div) {
       const svg = div.querySelector<SVGElement>("svg");
       if (svg) {
@@ -105,6 +105,8 @@ export function MainPianoRoll() {
     setShowCloseSelect(true);
   };
 
+  useEffect(() => console.log(text), [text]);
+
   return (
     <Col xs={8} className="p-0">
       <div
@@ -125,8 +127,10 @@ export function MainPianoRoll() {
           width={selectWidth}
           svgWidth={checkSvgWidth()}
           noteRectangles={findNoteRectangles()}
+          setText={setText}
         />
       </div>
+      <p className="my-3">{text ? text : "Click and drag to select an area"}</p>
     </Col>
   );
 }

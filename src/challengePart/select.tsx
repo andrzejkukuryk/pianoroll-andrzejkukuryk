@@ -17,6 +17,7 @@ interface SelectProps {
         width: number;
       }[]
     | undefined;
+  setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function Select({
@@ -28,6 +29,7 @@ export function Select({
   width,
   svgWidth,
   noteRectangles,
+  setText,
 }: SelectProps) {
   const [xl, setXl] = useState<number | undefined>(undefined);
   const [xr, setXr] = useState<number | undefined>(0);
@@ -57,6 +59,7 @@ export function Select({
   };
 
   const handleButtonClick = () => {
+    setText("bu");
     setShowSelect(false);
   };
 
@@ -87,8 +90,8 @@ export function Select({
   useEffect(() => {
     if (selectionEnd !== 0) {
       countSelectedNotes();
-      console.log(
-        `Selection starts at ${selectionPercentStart} ends at ${selectionPercentEnd} and selects ${countSelectedNotes()} notes.`
+      setText(
+        `Selection starts at ${selectionPercentStart}, ends at ${selectionPercentEnd} and selects ${countSelectedNotes()} notes.`
       );
     }
   }, [selectionEnd]);
