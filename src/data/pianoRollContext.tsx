@@ -13,8 +13,9 @@ const initialPianoRollContext = {
   allPianoRolls: [],
   pianoRollsThumbnails: [],
   currentPianoRoll: "",
-  refresh: () => {},
+  reset: () => {},
   choosePianoRoll: () => {},
+  setArrayOfDivs: () => {},
 } as unknown as ValueProp;
 
 export const PianoRollContext = createContext<ValueProp>(
@@ -27,6 +28,7 @@ interface ValueProp {
   currentPianoRoll: any;
   choosePianoRoll: (index: number) => void;
   setArrayOfDivs: React.Dispatch<React.SetStateAction<HTMLDivElement[]>>;
+  reset: () => void;
 }
 
 interface PianoRollProviderProps {
@@ -62,12 +64,20 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     setCurrentPianoRoll(newCurrentPianoRoll[0]);
   };
 
+  const reset = () => {
+    setArrayOfDivs([]);
+    setAllPianoRolls([]);
+    setCurrentPianoRoll(undefined);
+    setPianoRollsThumbnails([]);
+  };
+
   const value: ValueProp = {
     allPianoRolls,
     pianoRollsThumbnails,
     currentPianoRoll,
     choosePianoRoll,
     setArrayOfDivs,
+    reset,
   };
 
   return (

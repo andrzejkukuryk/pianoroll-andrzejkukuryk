@@ -7,10 +7,10 @@ import { PianoRollDisplay } from "./app";
 import { usePianoRollContext } from "../data/pianoRollContext";
 
 export function OriginalPart() {
-  const { setArrayOfDivs } = usePianoRollContext();
+  const { setArrayOfDivs, reset } = usePianoRollContext();
 
   const handleClick = async () => {
-    setArrayOfDivs([]);
+    reset();
     const csvToSVG = new PianoRollDisplay();
     await csvToSVG.generateSVGs();
     if (await csvToSVG.generateSVGs()) {
