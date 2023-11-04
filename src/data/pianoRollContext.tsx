@@ -25,7 +25,6 @@ interface ValueProp {
   allPianoRolls: any[];
   pianoRollsThumbnails: any[];
   currentPianoRoll: any;
-  refresh: () => void;
   choosePianoRoll: (index: number) => void;
   setArrayOfDivs: React.Dispatch<React.SetStateAction<HTMLDivElement[]>>;
 }
@@ -45,10 +44,6 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     JSX.Element[]
   >([]);
   const [currentPianoRoll, setCurrentPianoRoll] = useState<JSX.Element>();
-
-  const refresh = () => {
-    prepareJSXs();
-  };
 
   const prepareJSXs = () => {
     const preparedJSXs = arrayOfDivs.map((div, index) => (
@@ -71,12 +66,9 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     allPianoRolls,
     pianoRollsThumbnails,
     currentPianoRoll,
-    refresh,
     choosePianoRoll,
     setArrayOfDivs,
   };
-
-  console.log(arrayOfDivs);
 
   return (
     <PianoRollContext.Provider value={value}>

@@ -10,6 +10,7 @@ export function OriginalPart() {
   const { setArrayOfDivs } = usePianoRollContext();
 
   const handleClick = async () => {
+    setArrayOfDivs([]);
     const csvToSVG = new PianoRollDisplay();
     await csvToSVG.generateSVGs();
     if (await csvToSVG.generateSVGs()) {
@@ -18,8 +19,6 @@ export function OriginalPart() {
         setArrayOfDivs(newArrayOfDivs);
       }
     }
-
-    console.log(csvToSVG.generateSVGs);
   };
 
   return (

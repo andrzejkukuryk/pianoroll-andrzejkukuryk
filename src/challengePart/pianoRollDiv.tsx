@@ -11,16 +11,7 @@ export function PianoRollDiv({ content }: PianoRollDivProps) {
     if (divRef.current) {
       divRef.current.appendChild(content);
     }
-    // return () => {
-    //   //@ts-ignore
-    //   pianoRoll.current.removeChild(content);
-    // };
   }, []);
 
-  return (
-    <div
-      ref={divRef}
-      // dangerouslySetInnerHTML={{ __html: content }}
-    ></div>
-  );
+  return <div ref={divRef} />;
 }
