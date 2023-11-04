@@ -1,6 +1,6 @@
 import PianoRoll from "./pianoroll.js";
 
-export let arrayOfDivs = [];
+// export let arrayOfDivs = [];
 
 export class PianoRollDisplay {
   constructor(csvURL) {
@@ -37,16 +37,16 @@ export class PianoRollDisplay {
 
     // Append the SVG to the card container
     cardDiv.appendChild(svg);
-    arrayOfDivs.push(cardDiv);
+    // arrayOfDivs.push(cardDiv);
     return { cardDiv, svg };
   }
 
   async generateSVGs() {
     if (!this.data) await this.loadPianoRollData();
     if (!this.data) return;
-    arrayOfDivs = [];
-    // const pianoRollContainer = document.getElementById("pianoRollContainer");
-    // pianoRollContainer.innerHTML = "";
+    const arrayOfDivs = [];
+    const pianoRollContainer = document.getElementById("pianoRollContainer");
+    pianoRollContainer.innerHTML = "";
     for (let it = 0; it < 20; it++) {
       const start = it * 60;
       const end = start + 60;
@@ -54,14 +54,10 @@ export class PianoRollDisplay {
 
       const { cardDiv, svg } = this.preparePianoRollCard(it);
 
-      // pianoRollContainer.appendChild(cardDiv);
+      arrayOfDivs.push(cardDiv);
       const roll = new PianoRoll(svg, partData);
     }
+    return arrayOfDivs;
   }
 }
 
-
-// document.getElementById("loadCSV").addEventListener("click", async () => {
-//   const csvToSVG = new PianoRollDisplay();
-//   await csvToSVG.generateSVGs();
-// });
