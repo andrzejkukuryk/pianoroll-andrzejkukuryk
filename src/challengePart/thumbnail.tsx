@@ -16,22 +16,6 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
 
   const thumbnailWidth = view === "thumbnails" ? 3 : 9;
 
-  const prepareThumbnail = () => {
-    const div = pianoRoll.current;
-
-    if (div) {
-      const svg = div.querySelector<SVGSVGElement>("svg");
-      if (svg) {
-        svg.setAttribute("height", "150");
-        svg.setAttribute("width", "100%");
-      }
-    }
-  };
-
-  useEffect(() => {
-    prepareThumbnail();
-  }, [content]);
-
   const findIndex = () => {
     const div = pianoRoll.current;
 
@@ -48,7 +32,7 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
   return (
     <Col xs={thumbnailWidth} className={`p-0 mb-5 ms-5 ${styles.thumbnail}`}>
       <div ref={pianoRoll} onClick={() => choosePianoRoll(findIndex())}>
-        {content}
+        <div className={styles.contentDiv}>{content}</div>
       </div>
     </Col>
   );

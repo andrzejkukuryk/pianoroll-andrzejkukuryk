@@ -1,3 +1,18 @@
 .posRelative {
     position: relative;
 }
+
+.posRelative div {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.posRelative div svg {
+    width: 100%;
+    height: 600px;
+}
+
+.posRelative div button svg {
+    width: 24px;
+    height: 24px;
+}
