@@ -15,7 +15,6 @@ export function OriginalPart() {
     try {
       const csvToSVG = new PianoRollDisplay();
       const newArrayOfDivs = await csvToSVG.generateSVGs();
-
       if (newArrayOfDivs) {
         setArrayOfDivs(newArrayOfDivs);
       } else {

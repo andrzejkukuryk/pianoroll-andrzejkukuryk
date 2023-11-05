@@ -18,7 +18,7 @@ export function MainPianoRollView() {
         <Row>
           <MainPianoRoll />
           <Col xs={4} className="p-0">
-            <Container className={`p-0 mt-4 ${styles.scrollable}`}>
+            <Container className={`p-0 ps-5 ms-5 mt-4 ${styles.scrollable}`}>
               {createThumbnails()}
             </Container>
           </Col>

@@ -25,7 +25,7 @@ export class PianoRollDisplay {
     // Create and append other elements to the card container as needed
     const descriptionDiv = document.createElement("div");
     descriptionDiv.classList.add("description");
-    descriptionDiv.textContent = `This is a piano roll number ${rollId}`;
+    descriptionDiv.textContent = `Piano roll ${rollId}`;
     cardDiv.appendChild(descriptionDiv);
 
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");

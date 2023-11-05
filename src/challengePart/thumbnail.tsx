@@ -22,7 +22,7 @@ export function Thumbnail({ content, view }: ThumbnailProps) {
     if (div) {
       const svg = div.querySelector<SVGSVGElement>("svg");
       if (svg) {
-        svg.setAttribute("height", "150");
+        svg.setAttribute("height", "120");
         svg.setAttribute("width", "100%");
       }
     }

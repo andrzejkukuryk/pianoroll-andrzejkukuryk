@@ -8,7 +8,7 @@ export function ChallengePart() {
   const { currentPianoRoll } = usePianoRollContext();
 
   return (
-    <Container>
+    <Container className="mt-4">
       {!currentPianoRoll && <ThumbnailsView />}
       {currentPianoRoll && <MainPianoRollView />}
     </Container>

@@ -40,9 +40,11 @@ export function MainPianoRoll() {
       const rectsDimentions = newNoteRectangles.map((rect) => {
         const x = Number(rect.getAttribute("x"));
         const w = Number(rect.getAttribute("width"));
+        const p = Number(rect.getAttribute("pitch"));
         return {
           x: x,
           width: w,
+          pitch: p,
         };
       });
       return rectsDimentions;
@@ -105,8 +107,6 @@ export function MainPianoRoll() {
     setShowCloseSelect(true);
   };
 
-  useEffect(() => console.log(text), [text]);
-
   return (
     <Col xs={8} className="p-0">
       <div
@@ -119,7 +119,7 @@ export function MainPianoRoll() {
       >
         {currentPianoRoll}
         <Select
-          show={showSelect}
+          showSelect={showSelect}
           setShowSelect={setShowSelect}
           showCloseButton={showCloseSelect}
           x1={x1}
@@ -130,7 +130,9 @@ export function MainPianoRoll() {
           setText={setText}
         />
       </div>
-      <p className="my-3">{text ? text : "Click and drag to select an area"}</p>
+      <p className="my-3">
+        {text ? text : "Click and drag to select a piano roll area"}
+      </p>
     </Col>
   );
 }

@@ -6,4 +6,6 @@ body {
   font-family: 'Mulish', sans-serif;
   color: rgb(28, 28, 26);
   box-sizing: border-box;
+  scrollbar-gutter: stable both-edges;
+  overflow: overlay;
 }

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./select.module.css";
 import classNames from "classnames";
-import { ReactComponent as CloseButton } from "../assets/close.svg";
+import { pitchToNoteName } from "./pitchToNoteName";
+import { ReactComponent as CloseIcon } from "../assets/close.svg";
 
 interface SelectProps {
-  show: boolean;
+  showSelect: boolean;
   setShowSelect: React.Dispatch<React.SetStateAction<boolean>>;
   showCloseButton: boolean;
   x1: number;
@@ -15,13 +16,14 @@ interface SelectProps {
     | {
         x: number;
         width: number;
+        pitch: number;
       }[]
     | undefined;
   setText: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function Select({
-  show,
+  showSelect,
   setShowSelect,
   showCloseButton,
   x1,
@@ -38,13 +40,19 @@ export function Select({
   const [selectionEnd, setSelectionEnd] = useState(0);
   const [selectionPercentStart, setSeletionPercentStart] = useState(0);
   const [selectionPercentEnd, setSeletionPercentEnd] = useState(0);
-  const [numberOfSelectedNotes, setNumberOfSelectedNotes] = useState(0);
+  const [selectedNotes, setSelectedNotes] = useState<
+    { x: number; width: number; pitch: number }[]
+  >([]);
+  const [selectedPitches, setSelectedPitches] = useState<string[]>([]);
 
   useEffect(() => {
     setXl(x1);
   }, [x1]);
 
-  useEffect(() => checkWidth(), [width]);
+  useEffect(() => {
+    checkWidth();
+    resetText();
+  }, [width]);
 
   const checkWidth = () => {
     if (width < 0) {
@@ -59,7 +67,6 @@ export function Select({
   };
 
   const handleButtonClick = () => {
-    setText("bu");
     setShowSelect(false);
   };
 
@@ -91,29 +98,51 @@ export function Select({
     if (selectionEnd !== 0) {
       countSelectedNotes();
       setText(
-        `Selection starts at ${selectionPercentStart}, ends at ${selectionPercentEnd} and selects ${countSelectedNotes()} notes.`
+        `Selection starts at ${selectionPercentStart}, ends at ${selectionPercentEnd} and selects ${
+          countSelectedNotes()?.numberOfNotes
+        } ${countSelectedNotes()?.numberOfNotes === 1 ? "note:" : "notes:"} ${
+          countSelectedNotes()?.selectedPitches
+        }.`
       );
     }
   }, [selectionEnd]);
 
   const countSelectedNotes = () => {
     if (noteRectangles) {
-      const numberOfNotes = noteRectangles.filter(
+      const newSelectedNotes = noteRectangles.filter(
         (rect) =>
           (rect.x > selectionPercentStart && rect.x < selectionPercentEnd) ||
           (rect.x + rect.width > selectionPercentStart &&
             rect.x + rect.width < selectionPercentEnd) ||
           (rect.x < selectionPercentStart &&
             rect.x + rect.width > selectionPercentEnd)
-      ).length;
-      setNumberOfSelectedNotes(numberOfNotes);
-      return numberOfNotes;
+      );
+      setSelectedNotes(newSelectedNotes);
+      const numberOfNotes = newSelectedNotes.length;
+      const selectedPitches = newSelectedNotes
+        .map((note) => pitchToNoteName(note.pitch))
+        .join(", ");
+
+      return { numberOfNotes, selectedPitches };
     }
   };
 
+  const resetText = () => {
+    if (width === 0 && x1 !== selectionEnd) {
+      setText("");
+    }
+  };
+
+  const checkPitches = () => {
+    const allSelectedPitches = selectedNotes.map((note) =>
+      pitchToNoteName(note.pitch)
+    );
+    return allSelectedPitches;
+  };
+
   const divClass = classNames({
-    [styles.selectArea]: show,
-    [styles.hide]: !show || width === 0,
+    [styles.selectArea]: showSelect,
+    [styles.hide]: !showSelect || width === 0,
   });
 
   const buttonClass = classNames({
@@ -127,7 +156,7 @@ export function Select({
       style={{ left: xl, right: xr, width: selectWidth }}
     >
       <button onClick={handleButtonClick} className={buttonClass}>
-        <CloseButton className={styles.icon} />
+        <CloseIcon className={styles.icon} />
       </button>
     </div>
   );
