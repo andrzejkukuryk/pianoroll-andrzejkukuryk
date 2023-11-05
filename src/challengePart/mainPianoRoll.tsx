@@ -16,19 +16,7 @@ export function MainPianoRoll() {
   const pianoRoll = useRef<HTMLDivElement>(null);
 
   ////// SVG section //////
-  const prepareMainRoll = () => {
-    const div = pianoRoll.current;
-    if (div) {
-      const svg = div.querySelector<SVGElement>("svg");
-      if (svg) {
-        svg.setAttribute("height", "600");
-        svg.setAttribute("width", "100%");
-      }
-    }
-  };
-
   useEffect(() => {
-    prepareMainRoll();
     clearSelect();
   }, [currentPianoRoll]);
 

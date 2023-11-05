@@ -2,7 +2,12 @@
     position: relative;
 }
 
-svg.piano-roll-svg {
+.posRelative div svg {
     width: 100%;
     height: 600px;
+}
+
+.posRelative div button svg {
+    width: 24px;
+    height: 24px;
 }

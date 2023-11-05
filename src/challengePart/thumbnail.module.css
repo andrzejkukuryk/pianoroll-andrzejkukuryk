@@ -1,3 +1,16 @@
 .thumbnail {
     cursor: pointer;
 }
+
+.contentDiv div svg {
+    height: 120px;
+    width: 100%;
+    border: solid 2px rgba(93, 181, 213, 1);
+    border-radius: 8px;
+    transition: border-radius 0.2s, border 0.2s;
+}
+
+.contentDiv div svg:hover {
+    border: solid 2px rgba(93, 181, 213, 0);
+    border-radius: 0
+}
