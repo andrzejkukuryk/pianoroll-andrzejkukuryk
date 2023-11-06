@@ -14,12 +14,12 @@ export function MainPianoRollView() {
   };
   return (
     <Row>
-      <Container className="p-0">
+      <Container fluid className="p-0">
         <Row>
           <MainPianoRoll />
-          <Col></Col>
-          <Col xs={3} className="p-0">
-            <Container className={`p-0 mt-4 ${styles.scrollable}`}>
+          <Col className="d-none d-lg-block"></Col>
+          <Col xs={5} md={4} lg={3} className="p-0">
+            <Container fluid className={`p-0 mt-4 ${styles.scrollable}`}>
               {createThumbnails()}
             </Container>
           </Col>
