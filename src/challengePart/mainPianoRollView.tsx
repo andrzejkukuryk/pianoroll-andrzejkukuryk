@@ -5,6 +5,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { MainPianoRoll } from "./mainPianoRoll";
 import { Thumbnail } from "./thumbnail";
 
+// Returns the main Piano Roll view and scrollable thumbnails on the right side. Bootstrap is used to construct the grid.
+
 export function MainPianoRollView() {
   const { pianoRollsThumbnails } = usePianoRollContext();
   const createThumbnails = () => {

@@ -6,8 +6,12 @@ import { LoadButton } from "./loadButton";
 import { PianoRollDisplay } from "./app";
 import { usePianoRollContext } from "../data/pianoRollContext";
 
+// Returns the React reconstruction of the original part of the application provided by the client.
+
 export function OriginalPart() {
   const { setArrayOfDivs, reset } = usePianoRollContext();
+
+// Launches the application.
 
   const handleClick = async () => {
     reset();

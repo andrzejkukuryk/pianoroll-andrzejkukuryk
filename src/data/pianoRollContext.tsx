@@ -22,6 +22,8 @@ export const PianoRollContext = createContext<ValueProp>(
   initialPianoRollContext
 );
 
+// Defines the data types provided to the application by usePianoRollContext.
+
 interface ValueProp {
   allPianoRolls: any[];
   pianoRollsThumbnails: any[];
@@ -39,6 +41,8 @@ export const usePianoRollContext = () => {
   return useContext(PianoRollContext);
 };
 
+// Creates a data provider within the entire application.
+
 export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
   const [arrayOfDivs, setArrayOfDivs] = useState<HTMLDivElement[]>([]);
   const [allPianoRolls, setAllPianoRolls] = useState<JSX.Element[]>([]);
@@ -46,6 +50,8 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
     JSX.Element[]
   >([]);
   const [currentPianoRoll, setCurrentPianoRoll] = useState<JSX.Element>();
+
+// Prepares all the cardDivs in the form of JSX and sets them in the component's states.
 
   const prepareJSXs = () => {
     const preparedJSXs = arrayOfDivs.map((div, index) => (
@@ -57,12 +63,16 @@ export const PianoRollProvider: FC<PianoRollProviderProps> = ({ children }) => {
 
   useEffect(() => prepareJSXs(), [arrayOfDivs]);
 
+  // Selects the main Piano Roll from among the thumbnails and sets the component's states accordingly.
+
   const choosePianoRoll = (index: number) => {
     const temporary = [...allPianoRolls];
     const newCurrentPianoRoll = temporary.splice(index, 1);
     setPianoRollsThumbnails(temporary);
     setCurrentPianoRoll(newCurrentPianoRoll[0]);
   };
+
+// Resets the application to its default state.
 
   const reset = () => {
     setArrayOfDivs([]);

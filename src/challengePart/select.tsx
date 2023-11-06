@@ -4,6 +4,8 @@ import classNames from "classnames";
 import { pitchToNoteName } from "./pitchToNoteName";
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
 
+// Defines the props accepted by the component.
+
 interface SelectProps {
   showSelect: boolean;
   setShowSelect: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,6 +23,8 @@ interface SelectProps {
     | undefined;
   setText: React.Dispatch<React.SetStateAction<string>>;
 }
+
+// Creates a Select tool.
 
 export function Select({
   showSelect,
@@ -43,7 +47,7 @@ export function Select({
   const [selectedNotes, setSelectedNotes] = useState<
     { x: number; width: number; pitch: number }[]
   >([]);
-  const [selectedPitches, setSelectedPitches] = useState<string[]>([]);
+
 
   useEffect(() => {
     setXl(x1);
@@ -53,6 +57,8 @@ export function Select({
     checkWidth();
     resetText();
   }, [width]);
+
+// Checks the selection direction and determines its width.
 
   const checkWidth = () => {
     if (width < 0) {
@@ -69,6 +75,8 @@ export function Select({
   const handleButtonClick = () => {
     setShowSelect(false);
   };
+
+// Sets the start and end of the selection as component states.
 
   const selectResult = () => {
     if (width !== 0 && svgWidth) {
@@ -107,6 +115,8 @@ export function Select({
     }
   }, [selectionEnd]);
 
+// Counts the selected notes, determines their names, and then returns these values as an object.
+
   const countSelectedNotes = () => {
     if (noteRectangles) {
       const newSelectedNotes = noteRectangles.filter(
@@ -127,18 +137,14 @@ export function Select({
     }
   };
 
+// Resets the content of the Piano Roll caption when nothing is selected.
+
   const resetText = () => {
     if (width === 0 && x1 !== selectionEnd) {
       setText("");
     }
   };
 
-  const checkPitches = () => {
-    const allSelectedPitches = selectedNotes.map((note) =>
-      pitchToNoteName(note.pitch)
-    );
-    return allSelectedPitches;
-  };
 
   const divClass = classNames({
     [styles.selectArea]: showSelect,
