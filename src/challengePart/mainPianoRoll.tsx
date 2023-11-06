@@ -96,7 +96,7 @@ export function MainPianoRoll() {
   };
 
   return (
-    <Col xs={8} className="p-0">
+    <Col xs={7} md={8} className="p-0">
       <div
         ref={pianoRoll}
         className={styles.posRelative}
