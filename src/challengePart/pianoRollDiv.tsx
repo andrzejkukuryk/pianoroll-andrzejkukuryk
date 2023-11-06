@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 // Defines the props accepted by the component.
 
 interface PianoRollDivProps {
-  content: any;
+  content: HTMLDivElement;
 }
 
 // "Embeds the cardDiv (referred to as 'content' here) provided by the client in JSX."
