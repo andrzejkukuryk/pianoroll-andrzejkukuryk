@@ -1,3 +1,5 @@
+// Converts the MIDI pitch value to the letter name of the note.
+
 export function pitchToNoteName(pitch: number) {
   const noteNames = [
     "C",

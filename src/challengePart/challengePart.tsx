@@ -4,6 +4,8 @@ import { usePianoRollContext } from "../data/pianoRollContext";
 import { ThumbnailsView } from "./thubmnailsView";
 import { MainPianoRollView } from "./mainPianoRollView";
 
+// Displays the primary task view.
+
 export function ChallengePart() {
   const { currentPianoRoll } = usePianoRollContext();
 

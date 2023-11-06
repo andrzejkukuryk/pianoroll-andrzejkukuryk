@@ -4,6 +4,8 @@ import { Col } from "react-bootstrap";
 import { usePianoRollContext } from "../data/pianoRollContext";
 import { Select } from "./select";
 
+// Returns the main Piano Roll view.
+
 export function MainPianoRoll() {
   const { currentPianoRoll } = usePianoRollContext();
   const [showSelect, setShowSelect] = useState(false);
@@ -19,6 +21,8 @@ export function MainPianoRoll() {
   useEffect(() => {
     clearSelect();
   }, [currentPianoRoll]);
+
+// Searches for all noteRectangles in the SVG and returns an object containing the dimensions and sound pitch of each noteRectangle.
 
   const findNoteRectangles = () => {
     const div = pianoRoll.current;
@@ -39,6 +43,8 @@ export function MainPianoRoll() {
     }
   };
 
+// Checks the height of the SVG and returns its value.
+
   const checkSvgWidth = () => {
     const div = pianoRoll.current;
     if (div) {
@@ -48,6 +54,8 @@ export function MainPianoRoll() {
   };
 
   ////// Select section /////////
+
+// Resets selection to default
 
   const clearSelect = () => {
     setSelectWidth(0);
